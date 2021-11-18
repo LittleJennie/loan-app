@@ -46,7 +46,6 @@ export default function LoanAppPage(props) {
          touched,
          handleChange,
          handleBlur,
-         handleSubmit,
          isSubmitting,
          /* and other goodies */
        }) => (
