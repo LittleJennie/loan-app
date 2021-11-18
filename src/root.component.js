@@ -8,7 +8,7 @@ export default function Root(props) {
     // <section>{props.name} is mounted!</section>
     <BrowserRouter>
       <Routes>
-        <Route path="/loan-application" element={LoanAppPage} />
+        <Route path="/loan-application" element={<LoanAppPage />} />
       </Routes>
     </BrowserRouter>
   );

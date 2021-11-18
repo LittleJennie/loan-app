@@ -1,7 +1,7 @@
 import React from "react";
 import * as api from '../utils/api.js';
 import * as Yup from 'yup';
-import * as Formik from 'formik';
+import { Formik, Form, Field } from 'formik';
 
 export default function LoanAppPage(props) {
   console.log('*** here???')
