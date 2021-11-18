@@ -1,4 +1,5 @@
 import React from "react";
+import * as singleSpa from 'single-spa'
 import * as api from '../utils/api.js';
 import * as Yup from 'yup';
 import { useState } from 'react';
@@ -18,17 +19,17 @@ export default function LoanAppPage(props) {
           email: '',
           phoneNubmer: '',
         }}
-        validationSchema={Yup.object().shape({
-          firstName: Yup.string()
-            .required('First Name is required'),
-          lastName: Yup.string()
-            .required('Last Name is required'),
-          email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required'),
-          phoneNubmer: Yup.string()
-            .required('Phone number is required'),
-        })}
+        // validationSchema={Yup.object().shape({
+        //   firstName: Yup.string()
+        //     .required('First Name is required'),
+        //   lastName: Yup.string()
+        //     .required('Last Name is required'),
+        //   email: Yup.string()
+        //     .email('Email is invalid')
+        //     .required('Email is required'),
+        //   phoneNubmer: Yup.string()
+        //     .required('Phone number is required'),
+        // })}
         onSubmit={(
           values,
           { setSubmitting },
@@ -36,7 +37,7 @@ export default function LoanAppPage(props) {
           console.log('** values: ?', values)
           // maybe we do the on submit validation + err check here?
           api.submitApp(values);
-          setSubmitting(false)
+          singleSpa.navigateToUrl('/success');
         }}
       >
         {({
@@ -49,7 +50,7 @@ export default function LoanAppPage(props) {
          isSubmitting,
          /* and other goodies */
        }) => (
-         <form onSubmit={handleSubmit}>
+         <Form>
           <label htmlFor="firstName">First Name</label>
           <Field
             type="firstName"
@@ -89,7 +90,7 @@ export default function LoanAppPage(props) {
           <button type="submit" disabled={isSubmitting}>
             Submit
           </button>
-        </form>
+        </Form>
        )}
       </Formik>
     </div>
