@@ -1,13 +1,12 @@
 import React from "react";
 import * as api from '../utils/api.js';
 import * as Yup from 'yup';
+import { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 export default function LoanAppPage(props) {
   console.log('*** here???')
-  const initialState = {
-    count: 0
-  };
+  const [count, setCount] = useState();
 
   return (
     <div>
@@ -32,36 +31,66 @@ export default function LoanAppPage(props) {
         })}
         onSubmit={(
           values,
+          { setSubmitting },
         ) => {
+          console.log('** values: ?', values)
           // maybe we do the on submit validation + err check here?
           api.submitApp(values);
+          setSubmitting(false)
         }}
       >
-        <Form>
+        {({
+         values,
+         errors,
+         touched,
+         handleChange,
+         handleBlur,
+         handleSubmit,
+         isSubmitting,
+         /* and other goodies */
+       }) => (
+         <form onSubmit={handleSubmit}>
           <label htmlFor="firstName">First Name</label>
-          <Field id="firstName" name="firstName" placeholder="John" />
-
+          <Field
+            type="firstName"
+            name="firstName"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.firstName}
+          />
+          {errors.firstName && touched.firstName && errors.firstName}
           <label htmlFor="lastName">Last Name</label>
-          <Field id="lastName" name="lastName" placeholder="Doe" />
-
-          <label htmlFor="email">Email</label>
           <Field
-            id="email"
-            name="email"
-            placeholder="john@acme.com"
+            type="lastName"
+            name="lastName"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.lastName}
+          />
+          {errors.lastName && touched.lastName && errors.lastName}
+          <label htmlFor="Email">Email</label>
+          <input
             type="email"
+            name="email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
           />
-
-          <label htmlFor="phoneNumber">Phone Number</label>
-          <Field
-            id="phoneNumber"
-            name="phoneNumber"
-            placeholder="888-888-8888"
+          {errors.email && touched.email && errors.email}
+          <label htmlFor="phoneNumber">phoneNumber</label>
+          <input
             type="phoneNumber"
+            name="phoneNumber"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.phoneNumber}
           />
-
-          <button type="submit">Submit</button>
-        </Form>
+          {errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}
+          <button type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
+        </form>
+       )}
       </Formik>
     </div>
   );
